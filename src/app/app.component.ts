@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
+
+import { Email } from './models/Email';
 
 @Component({
   selector: 'app-root',
@@ -6,7 +9,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   private _isNewEmailFormOpen = false;
+
+  email = new Email();
+
+  //emailList = [];
+  emailList: Email[] = []; //: sempre define o tipo da propriedade
 
   get isNewEmailFormOpen() {
     return this._isNewEmailFormOpen;
@@ -16,8 +25,21 @@ export class AppComponent {
     this._isNewEmailFormOpen = !this.isNewEmailFormOpen;
   }
 
-  submitEmail(eventSubmit: Event) {
-    eventSubmit.preventDefault();
-    console.log(eventSubmit);
+  validateForm(form) {
+    for(let nameControl in form.controls) {
+      form.controls[nameControl].markAsTouched();
+    }
+  }
+
+  submitEmail(formEmail: NgForm) {
+    if(formEmail.invalid) {
+      this.validateForm(formEmail);
+      return;
+    }
+
+    this.emailList.push(this.email);
+    this.email = new Email(); //cria uma nova lista para trocar a ref. de memoria
+
+    formEmail.reset();
   }
 }

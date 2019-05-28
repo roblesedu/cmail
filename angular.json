@@ -23,6 +23,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/assets/css/fonts.css",
               "src/styles.css",
               "src/assets/css/globalFab.css",
               "src/assets/css/tooltip.css",
