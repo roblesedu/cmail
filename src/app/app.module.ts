@@ -1,18 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from "@angular/forms";
-
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/header/header.component';
+import { RegisterModule } from './modules/register/register.module';
+import { LoginModule } from './modules/login/login.module';
+import { InboxModule } from './modules/inbox/inbox.module';
+import { RouterModel } from './app-routes';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HeaderComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    RegisterModule,
+    LoginModule,
+    InboxModule,
+    RouterModel
   ],
   providers: [],
   bootstrap: [AppComponent]
