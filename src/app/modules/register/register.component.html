@@ -4,16 +4,32 @@
     <main class="mdl-layout__content">
       <div class="page-content">
         <div class="mdl-grid">
-          <form>
-            <cmail-form-group label="Nome">
-              <input required type="text" name="recepient" id="recepient" placeholder=" " class="mdl-textfield__input">
+          <form [formGroup]="registerForm" (ngSubmit)="registerSubmit()">
+            <h1 *ngIf="registerMessage">{{registerMessage}}</h1>
+            <cmail-form-group label="Nome" id-form="name">
+              <input cmailFormField formControlName="name" required type="text" name="name">
               <span class="mdl-textfield__error">Informar um nome é obrigatório!</span>
             </cmail-form-group>
 
-            <cmail-form-group label="E-mail">
-                <input required type="email" name="recepient" id="recepient" placeholder=" " class="mdl-textfield__input">
-                <span class="mdl-textfield__error">Informar um email é obrigatório!</span>
-              </cmail-form-group>
+            <cmail-form-group label="Username" id-form="username">
+              <input cmailFormField formControlName="username" required type="text" name="username">
+              <span class="mdl-textfield__error">Informar um username é obrigatório!</span>
+            </cmail-form-group>
+
+            <cmail-form-group label="Senha" id-form="password">
+              <input cmailFormField formControlName="password" required type="password" name="password">
+              <span class="mdl-textfield__error">Informar uma senha é obrigatório!</span>
+            </cmail-form-group>
+
+            <cmail-form-group label="Avatar" id-form="avatar">
+              <input cmailFormField formControlName="avatar" required type="text" name="avatar">
+              <span class="mdl-textfield__error">Informar um avatar é obrigatório!</span>
+            </cmail-form-group>
+
+            <cmail-form-group label="Phone" id-form="phone">
+              <input cmailFormField formControlName="phone" required type="text" name="phone">
+              <span class="mdl-textfield__error">Informar um telefone é obrigatório!</span>
+            </cmail-form-group>
             
             <div class="mdl-card__actions">
               <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
