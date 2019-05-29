@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Email } from '../../models/Email';
+import { FormValidate } from "src/app/utils/formValidate";
 
 @Component({
   selector: 'cmail-inbox',
@@ -29,15 +30,9 @@ export class InboxComponent implements OnInit {
     this._isNewEmailFormOpen = !this.isNewEmailFormOpen;
   }
 
-  validateForm(form) {
-    for(let nameControl in form.controls) {
-      form.controls[nameControl].markAsTouched();
-    }
-  }
-
   submitEmail(formEmail: NgForm) {
     if(formEmail.invalid) {
-      this.validateForm(formEmail);
+      FormValidate.validateForm(formEmail);
       return;
     }
 

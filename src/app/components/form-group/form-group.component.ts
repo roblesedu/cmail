@@ -8,7 +8,13 @@ import { Component, OnInit, Input } from '@angular/core';
 export class FormGroupComponent implements OnInit {
 
   @Input() label = "";
-  @Input('id-form') idCampo = ""; 
+  @Input('id-form') idCampo = "";
+
+  //destructing do objeto input
+  @Input('control') validate = {
+    invalid: false,
+    touched: false
+  };
 
   constructor() { }
 

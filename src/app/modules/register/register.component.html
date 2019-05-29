@@ -6,29 +6,48 @@
         <div class="mdl-grid">
           <form [formGroup]="registerForm" (ngSubmit)="registerSubmit()">
             <h1 *ngIf="registerMessage">{{registerMessage}}</h1>
-            <cmail-form-group label="Nome" id-form="name">
+            <cmail-form-group label="Nome" id-form="name" [control]="name">
               <input cmailFormField formControlName="name" required type="text" name="name">
               <span class="mdl-textfield__error">Informar um nome é obrigatório!</span>
+              {{username.getError('required')}}
             </cmail-form-group>
-
-            <cmail-form-group label="Username" id-form="username">
+           
+            <cmail-form-group label="Username" id-form="username" [control]="username">
               <input cmailFormField formControlName="username" required type="text" name="username">
-              <span class="mdl-textfield__error">Informar um username é obrigatório!</span>
+              <span *ngIf="username.getError('required')" class="mdl-textfield__error">Informar um username é obrigatório!</span>
+              
+              <span *ngIf="username.getError('minlength')" class="mdl-textfield__error">
+                username tem que ter no minimo 3 caracteres
+                {{username.getError('minlength').requiredLength}}
+              </span>
+                
             </cmail-form-group>
 
-            <cmail-form-group label="Senha" id-form="password">
+            <cmail-form-group label="Senha" id-form="password" [control]="password">
               <input cmailFormField formControlName="password" required type="password" name="password">
               <span class="mdl-textfield__error">Informar uma senha é obrigatório!</span>
             </cmail-form-group>
 
-            <cmail-form-group label="Avatar" id-form="avatar">
+            <cmail-form-group label="Avatar" id-form="avatar" [control]="registerForm.get('avatar')">
               <input cmailFormField formControlName="avatar" required type="text" name="avatar">
-              <span class="mdl-textfield__error">Informar um avatar é obrigatório!</span>
+              <span class="mdl-textfield__error" *ngIf="registerForm.get('avatar').hasError('required')">Informar um avatar é obrigatório!</span>
+              
+              <br>  
+              {{registerForm.get('avatar').status}}
+              <span class="mdl-textfield__error" *ngIf="registerForm.get('avatar').status == 'PENDING'">Validação pendente....</span>
+
+              <span class="mdl-textfield__error" *ngIf="registerForm.get('avatar').status == 'VALID'">URL válida</span>
+
+              <span class="mdl-textfield__error" *ngIf="registerForm.get('avatar').hasError('invalidUrl')">Erro na URL informada</span>
             </cmail-form-group>
 
-            <cmail-form-group label="Phone" id-form="phone">
+            <cmail-form-group label="Phone" id-form="phone" [control]="phone">
               <input cmailFormField formControlName="phone" required type="text" name="phone">
-              <span class="mdl-textfield__error">Informar um telefone é obrigatório!</span>
+              <span *ngIf="phone.getError('required')" class="mdl-textfield__error">Informar um telefone é obrigatório!</span>
+
+              <span *ngIf="phone.getError('pattern')" class="mdl-textfield__error">
+                  O número do telefone deve ser 999999999
+                </span>
             </cmail-form-group>
             
             <div class="mdl-card__actions">
@@ -36,7 +55,6 @@
                 Cadastrar
               </button>
             </div>
-  
           </form>
         </div>
       </div>
