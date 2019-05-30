@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from "@angular/common/http";
 import { RegisterComponent } from './register.component';
-import { RouterModel } from 'src/app/app-routes';
 import { HeaderModule } from 'src/app/components/header/header.module';
 import { FormGroupModule } from 'src/app/components/form-group/form-group.module';
+import { RegisterRoutingModule } from './register-routing.module';
 
 @NgModule({
   declarations: [
@@ -16,12 +16,12 @@ import { FormGroupModule } from 'src/app/components/form-group/form-group.module
   ],
   imports: [
     CommonModule,
-    RouterModel,  
     HeaderModule,
     FormGroupModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RegisterRoutingModule
   ]
 })
 export class RegisterModule { }

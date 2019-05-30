@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ValidationErrors, AbstractControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { UserPost } from 'src/app/models/dto/user-register-post';
 import { FormValidate } from "src/app/utils/formValidate";
 import { map, catchError } from "rxjs/operators";
@@ -27,28 +28,54 @@ export class RegisterComponent implements OnInit {
     password: this.password,
     avatar: this.avatar,
     phone: this.phone
-  })
+  }, {updateOn: 'blur'}) //updateOn faz com que seja disparado no onBlur
 
   registerMessage = '';
 
   //é possível passar uma instância do angular no constructor numa propriedade
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private route: Router) { }
 
   ngOnInit() {
   }
 
-  validateImage(): Observable<ValidationErrors> {
-    const url = this.avatar.value;
+  //é possível ter o "controle" na função, sendo assim, não precisa declarar como const dependente de único campo
+  //o retorno do Observable pode ser um erro ou retornar null (o angular entende o null como válido)
+  validateImage(controle: AbstractControl): Observable<ValidationErrors | null> {
+    const url = controle.value;
 
     //head só retorna o status 200
     //pipe retorna um observable definido no head
     return this.http.head(url,{observe: 'response'}).pipe(
                 map((response) => {
-                  console.log(response.ok);
-                  return [response.ok] ? null : {invalidUrl : true}
+                  if(response.ok) {
+                    //https://avatars1.githubusercontent.com/u/2079776?s=460&v=4
+                    console.warn("deu certo");
+                    console.log(response);
+
+                    return null
+                  } else {
+                    console.warn("error");
+                    console.log(response);
+                    
+                    let error = {
+                      invalidUrl: "A URL é inválida"
+                    }
+
+                    return error;
+                  }
                 }),
-                catchError((error) => {
-                  return [{invalidUrl: true}]
+                catchError((response) => {
+                  //https://www.infoescola.com/wp-content/uploads/2008/05/capivara-119654188.jpg
+                  console.log("caiu no catch error");
+                  console.log(response.status);
+                  
+
+                  let errorMsg = {
+                    invalidUrl: "URL com bloqueio de CORS",
+                    status: response.status
+                  }
+
+                  return [errorMsg];
                 })
               )
   }
@@ -65,6 +92,8 @@ export class RegisterComponent implements OnInit {
       (response) => {
         console.log(response)
         this.registerMessage = 'Usuário cadastrado com sucesso';
+        this.registerForm.reset();
+        this.route.navigate(['login' ,userDataApi.name]);
       },
       (error) => {
         console.log(error);
@@ -72,11 +101,6 @@ export class RegisterComponent implements OnInit {
       () => {
         //complete
         console.log("sucesso");
-        this.registerForm.reset();
-
-        setTimeout(()=>{
-          this.registerMessage = ' ';
-        },3000)
       }
     )
   }

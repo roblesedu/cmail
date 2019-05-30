@@ -1,19 +1,25 @@
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './modules/login/login.component';
-import { InboxComponent } from './modules/inbox/inbox.component';
-import { RegisterComponent } from './modules/register/register.component';
+import { NgModule } from '@angular/core';
 
 const routesApp: Routes = [
 	{	path: '',
-		component: LoginComponent
+		loadChildren: 'src/app/modules/login/login.module#LoginModule'
+	},
+	{	path: 'login',
+		loadChildren: 'src/app/modules/login/login.module#LoginModule'
+	},
+	{
+		path: 'login/:userName',
+		loadChildren: 'src/app/modules/login/login.module#LoginModule'
+		//recebendo parâmetros numa rota /:nomeParametro
 	},
 	{
 		path: 'inbox',
-		component: InboxComponent
+		loadChildren: 'src/app/modules/inbox/inbox.module#InboxModule'
 	},
 	{
 		path: 'register',
-		component: RegisterComponent
+		loadChildren: 'src/app/modules/register/register.module#RegisterModule'
 	},
 	{
 		path: '**',
@@ -21,4 +27,13 @@ const routesApp: Routes = [
 	}
 ]
 
-export const RouterModel = RouterModule.forRoot(routesApp);
+//transforma numa classe padronizada e importa/exporta o RouterModule como uma classe configurável
+@NgModule({
+	imports: [
+		RouterModule.forRoot(routesApp)
+	],
+	exports: [
+		RouterModule
+	]
+})
+export class RouterModel {}

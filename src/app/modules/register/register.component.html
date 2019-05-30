@@ -9,7 +9,7 @@
             <cmail-form-group label="Nome" id-form="name" [control]="name">
               <input cmailFormField formControlName="name" required type="text" name="name">
               <span class="mdl-textfield__error">Informar um nome é obrigatório!</span>
-              {{username.getError('required')}}
+              <!--{{username.getError('required')}}-->
             </cmail-form-group>
            
             <cmail-form-group label="Username" id-form="username" [control]="username">
@@ -32,13 +32,11 @@
               <input cmailFormField formControlName="avatar" required type="text" name="avatar">
               <span class="mdl-textfield__error" *ngIf="registerForm.get('avatar').hasError('required')">Informar um avatar é obrigatório!</span>
               
-              <br>  
-              {{registerForm.get('avatar').status}}
-              <span class="mdl-textfield__error" *ngIf="registerForm.get('avatar').status == 'PENDING'">Validação pendente....</span>
+              <span class="mdl-textfield__error mdl-textfield__checking" *ngIf="registerForm.get('avatar').status == 'PENDING'">Checking....</span>
 
-              <span class="mdl-textfield__error" *ngIf="registerForm.get('avatar').status == 'VALID'">URL válida</span>
+              <span class="mdl-textfield__error mdl-textfield__valid" *ngIf="registerForm.get('avatar').status == 'VALID'">URL válida</span>
 
-              <span class="mdl-textfield__error" *ngIf="registerForm.get('avatar').hasError('invalidUrl')">Erro na URL informada</span>
+              <span class="mdl-textfield__error" *ngIf="registerForm.get('avatar').hasError('invalidUrl')">url inválida! {{avatar.getError('status')}}</span>
             </cmail-form-group>
 
             <cmail-form-group label="Phone" id-form="phone" [control]="phone">

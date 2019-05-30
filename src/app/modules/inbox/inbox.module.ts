@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InboxComponent } from './inbox.component';
-import { RouterModel } from 'src/app/app-routes';
 import { HeaderModule } from 'src/app/components/header/header.module';
+import { InboxRoutingMoudeModule } from './inbox-routing.module';
 
 @NgModule({
   declarations: [
@@ -15,8 +15,8 @@ import { HeaderModule } from 'src/app/components/header/header.module';
   imports: [
     CommonModule,
     FormsModule,
-    RouterModel,
-    HeaderModule
+    HeaderModule,
+    InboxRoutingMoudeModule
   ]
 })
 export class InboxModule { }
