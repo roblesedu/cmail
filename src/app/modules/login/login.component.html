@@ -7,7 +7,7 @@
           <h1 class="mdl-card__title-text">Bem vindos/as ao CMail!</h1>
         </header>
   
-        <form #loginForm (ngSubmit)="submitLogin(loginForm)" autocomplete="off" class="mdl-card__supporting-text">
+        <form #loginForm="ngForm" (ngSubmit)="submitLogin(loginForm)" autocomplete="off" class="mdl-card__supporting-text">
   
           <!-- aqui os campos do formulário -->
           <cmail-form-group label="Email" id-form="email" [control]="email">
@@ -21,7 +21,7 @@
           </cmail-form-group>
   
           <div class="mdl-card__actions mdl-card--border">
-            <a routerLink="cadastro" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+            <a routerLink="register" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
               Primeiro login? Cadastre-se!
             </a>
             <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent entrar">

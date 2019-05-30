@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidationErrors, AbstractControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { UserPost } from 'src/app/models/dto/user-register-post';
 import { FormValidate } from "src/app/utils/formValidate";
 import { map, catchError } from "rxjs/operators";
 import { Observable } from 'rxjs';
+import { RegisterService } from 'src/app/services/register.services';
 
 @Component({
   selector: 'cmail-register',
@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
   registerMessage = '';
 
   //é possível passar uma instância do angular no constructor numa propriedade
-  constructor(private http: HttpClient, private route: Router) { }
+  constructor(private service: RegisterService, private route: Router, private http: HttpClient) { }
 
   ngOnInit() {
   }
@@ -86,14 +86,12 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    let userDataApi = new UserPost(this.registerForm.value)
-
-    this.http.post('http://localhost:3200/users',userDataApi).subscribe(
-      (response) => {
+    this.service.register(this.registerForm.value).subscribe(
+      (response: any) => {
         console.log(response)
         this.registerMessage = 'Usuário cadastrado com sucesso';
         this.registerForm.reset();
-        this.route.navigate(['login' ,userDataApi.name]);
+        this.route.navigate(['login' ,this.registerForm.get('name')]);
       },
       (error) => {
         console.log(error);

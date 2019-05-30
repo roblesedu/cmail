@@ -1,5 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { AuthGuard } from './guards/auth.guard';
 
 const routesApp: Routes = [
 	{	path: '',
@@ -15,7 +16,8 @@ const routesApp: Routes = [
 	},
 	{
 		path: 'inbox',
-		loadChildren: 'src/app/modules/inbox/inbox.module#InboxModule'
+		loadChildren: 'src/app/modules/inbox/inbox.module#InboxModule',
+		canActivate: [AuthGuard]
 	},
 	{
 		path: 'register',
@@ -34,6 +36,9 @@ const routesApp: Routes = [
 	],
 	exports: [
 		RouterModule
+	],
+	providers: [
+		AuthGuard
 	]
 })
 export class RouterModel {}

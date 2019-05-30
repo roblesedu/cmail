@@ -11,6 +11,15 @@ import { Component } from "@angular/core";
 
 export class HeaderComponent {
     isMenuOpen = false;
+    userName = '';
+    userEmail = '';
+    userAvatar = '';
+
+    ngOnInit() {
+        this.userName = localStorage.getItem('name');
+        this.userEmail = localStorage.getItem('email');
+        this.userAvatar = localStorage.getItem('avatar');
+    }
 
     toogleMenu() {
         this.isMenuOpen = !this.isMenuOpen;

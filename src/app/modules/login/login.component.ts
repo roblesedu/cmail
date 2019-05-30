@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { FormValidate } from 'src/app/utils/formValidate';
+import { LoginService } from 'src/app/services/login.services';
 
 @Component({
   selector: 'cmail-login',
@@ -13,14 +16,24 @@ export class LoginComponent implements OnInit {
     password: ''
   }
 
-  constructor() { }
+  constructor(private service: LoginService, private route: Router) { }
 
   ngOnInit() {
   }
 
   submitLogin(loginForm: NgForm) {
-    if(loginForm.valid) {
-      console.log(this.login);
+    if(loginForm.invalid) {
+      FormValidate.validateForm(loginForm);
+      return;
     }
+
+    this.service.authenticate(this.login)
+        .subscribe(
+          (response: any) => {
+            console.log(response);
+            
+            this.route.navigate(['inbox']);
+          }
+      )
   }
 }
