@@ -14,6 +14,7 @@ export class HeaderComponent {
     userName = '';
     userEmail = '';
     userAvatar = '';
+    title = "Robles E-mail"
 
     @Input() filter = new EventEmitter<string>();
 

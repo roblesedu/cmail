@@ -15,7 +15,7 @@ export class InboxComponent implements OnInit {
   email = new Email();
   //emailList = [];
   emailList: Email[] = []; //: sempre define o tipo da propriedade
-  filterText = "";
+  filterText = '';
 
   constructor(private service: EmailService) { }
 
@@ -68,7 +68,6 @@ export class InboxComponent implements OnInit {
     this.service.submitEmailService(this.email)
                 .subscribe(
                   emailApi => {
-                    debugger;
                     this.emailList.push(emailApi);
                     this.email = new Email(); //cria uma nova lista para trocar a ref. de memoria
                     formEmail.reset();
@@ -84,6 +83,7 @@ export class InboxComponent implements OnInit {
       if(email.recepient.toLowerCase().includes(this.filterText) 
         || email.subject.toLowerCase().includes(this.filterText)
         || email.message.toLowerCase().includes(this.filterText)) {
+      } {
         return email
       }
     })
