@@ -1,16 +1,17 @@
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-  <cmail-header></cmail-header>
+  <cmail-header (filter)="filterText = $event"></cmail-header>
   <main class="mdl-layout__content">
     <div class="page-content">
 
-      <div class="mdl-grid">
-        <ul>
-          <li *ngFor="let email of emailList">
-            <strong>Para:</strong> {{email.recepient}} <br>
-            <strong>Assunto:</strong> {{email.subject}}
-          </li>
-        </ul>
-      </div>
+      <ul class="mdl-list">
+        <cmail-list-item 
+          *ngFor="let emailLista of filterEmailList().reverse()" 
+          [email]="emailLista" 
+          (meDeletaAi)="deleteEmail(emailLista.id)"
+          [title]="emailLista.id"
+        >
+        </cmail-list-item>
+      </ul>
 
       <div class="mdl-grid">
         <!-- Floating Multiline Textfield -->

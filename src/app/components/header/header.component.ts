@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Input } from "@angular/core";
 
 @Component({
     selector: 'cmail-header',
@@ -14,6 +14,8 @@ export class HeaderComponent {
     userName = '';
     userEmail = '';
     userAvatar = '';
+
+    @Input() filter = new EventEmitter<string>();
 
     ngOnInit() {
         this.userName = localStorage.getItem('name');

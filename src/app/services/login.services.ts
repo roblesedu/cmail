@@ -20,8 +20,7 @@ export class LoginService {
                     .post(environment.cmailApi + this.endpoint, loginDto)
                     .pipe(
                         map((response: any) => {
-                            console.log(response);
-                            localStorage.setItem('cmail',response.token);
+                            localStorage.setItem('cmail-token',response.token);
                             localStorage.setItem('name',response.name);
                             localStorage.setItem('email',response.email);
                             localStorage.setItem('avatar',response.avatarUrl);
